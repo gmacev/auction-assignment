@@ -48,3 +48,5 @@ io.on("connection", socket =>  {
         //io.emit("users", users)
     })
 })
+
+module.exports.ioObject = io

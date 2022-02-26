@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid')
 const userModel = require("../models/userSchema");
 const auctionsModel = require("../models/auctionsSchema");
 const bcrypt = require('bcrypt');
+const socket = require('../app');
 
 let auctions = []
 
@@ -196,6 +197,8 @@ module.exports = {
             })
 
             inUpdate = false
+
+            socket.ioObject.emit("auction", response)
 
             return res.send({error: false, data: response, money: updatedUser.money})
         }

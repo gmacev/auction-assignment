@@ -3,7 +3,10 @@ import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {ContextUser} from "../contexts/UserContext";
 import RelativeTime from '@yaireo/relative-time'
-import InListBidComp from "./InListBidComp";
+import InListBidComp from "./InListBidComp"
+import io from "socket.io-client";
+
+const socket = io.connect(process.env.REACT_APP_SOCKETS_SERVER)
 
 const SingleAuctionComp = () => {
     const navigate = useNavigate()
@@ -11,14 +14,19 @@ const SingleAuctionComp = () => {
 
     const {auctionId} = useParams()
 
-    console.log(auctionId)
-
     const [getAuction, setAuction] = useState({})
     const [getResponse, setResponse] = useState("")
     const [getInRequest, setInRequest] = useState(false)
     const [getEndTimeString, setEndTimeString] = useState("")
 
     const {getUserData, setUserData} = useContext(ContextUser)
+
+    useEffect(() => {
+        socket.on("auction", (auction) => {
+            if(auction._id === auctionId)
+                setAuction(auction)
+        })
+    }, [socket])
 
     useEffect(() => {
         const interval = setInterval(getEndDate, 1000)
