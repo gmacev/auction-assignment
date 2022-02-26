@@ -134,7 +134,7 @@ const SingleAuctionComp = () => {
                         </div>
 
                         <div>
-                            {getUserData.username !== getAuction.username &&
+                            {(getUserData.username !== getAuction.username && !getAuction.ended && getEndTimeString && getEndTimeString !== "Ended") &&
                             <div className="d-flex mt-3 gap-2">
                                 <input ref={bidPriceRef} type="number" className={`form-control ${getInRequest && "disabled"}`} placeholder="Bid price"/>
                                 <button className="btn btn-success btn-sm" style={{minWidth: "60px"}} onClick={createBid}>BID</button>

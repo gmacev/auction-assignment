@@ -43,10 +43,4 @@ http.listen(PORT_SOCKETS, () => {
     console.log("Sockets server listening on port " + PORT_SOCKETS)
 })
 
-io.on("connection", socket =>  {
-    socket.on("disconnect", () => {
-        //io.emit("users", users)
-    })
-})
-
 module.exports.ioObject = io
